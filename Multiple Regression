@@ -1,0 +1,31 @@
+#This is used with mock data mean to simulate clients. Based on this we can predict what age do we need to target ads to in order to have maximum efficiency
+import pandas as pd
+#This is the dataset
+Customer_details = "customer_details.csv"
+#Reading and storing the data
+Data = pd.read_csv(Customer_details)
+#Printing summary of data
+Data.describe()
+#This are the variables (Columns in the CSV)
+Data.columns
+#Eliminating non-values. 
+Data = Data.dropna(axis=0)
+#Here we select the predicted targets
+Y = Data.customer_age
+#Here we chose the input
+Data_feature = ['customer_age','tenure']
+X = Data[Data_feature]
+
+#Here we build the model
+
+from sklearn.tree import DecisionTreeRegressor
+
+#Define model and eliminate randomness
+Model = DecisionTreeRegressor(random_state=1)
+Model.fit(X, Y)
+print("making predictions for: ")
+print(X.head())
+print("The predictions are: ")
+print(Model.predict(X.head()))
+print(max(Model.predict(X.head())))
+print(min(Model.predict(X.head())))
