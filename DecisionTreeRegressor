@@ -1,0 +1,28 @@
+import pandas as pd
+#This is the dataset
+Customer_details = r"C:\Users\alvar\OneDrive\Escritorio\RB\dashboard_mayoral_202204271008.csv"
+#Reading and storing the data
+Data = pd.read_csv(Customer_details)
+#Printing summary of data
+Data.describe()
+#This are the variables (Columns in the CSV)
+Data.columns
+#Eliminating non-values. 
+Data = Data.dropna(axis=0)
+#Here we select the predicted targets
+Y = Data.SALEQUANTITY
+#Here we chose the input
+Data_feature = ['NumEmployees','PRICE','SALEAMOUNT','Discountamount','tickets']
+X = Data[Data_feature]
+
+#Here we build the model
+
+from sklearn.tree import DecisionTreeRegressor
+
+#Define model and eliminate randomness
+Model = DecisionTreeRegressor(random_state=1)
+Model.fit(X, Y)
+print("making predictions for: ")
+print(X.head())
+print("The predictions are: ")
+print(Model.predict(X.head()))
